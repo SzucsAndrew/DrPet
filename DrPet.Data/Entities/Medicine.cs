@@ -7,7 +7,7 @@ namespace DrPet.Data.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
@@ -18,6 +18,11 @@ namespace DrPet.Data.Entities
         {
             builder.HasKey(m => m.Id);
             builder.Property(m => m.Id).UseIdentityColumn();
+
+            builder.Property(m => m.Name).IsRequired();
+            builder.Property(m => m.Name).HasMaxLength(100);
+
+            builder.Property(m => m.Description).HasMaxLength(300);
         }
     }
 }

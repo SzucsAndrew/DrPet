@@ -1,6 +1,6 @@
 ﻿namespace DrPet.Data.Entities.Enums
 {
-    public enum Status
+    public enum AnimalStatus
     {
         Alive = 1,
         Inpatient = 2,

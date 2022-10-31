@@ -11,7 +11,7 @@ namespace DrPet.Data.Entities
         public int SpeciesId { get; set; }
         public Species Species { get; set; }
 
-        public ICollection<Animal> Animals { get; set; }//----
+        public ICollection<Animal> Animals { get; set; }
 
         public void Configure(EntityTypeBuilder<Kind> builder)
         {

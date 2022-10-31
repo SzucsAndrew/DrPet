@@ -9,7 +9,7 @@ namespace DrPet.Data.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
-        public Status Status { get; set; }
+        public AnimalStatus Status { get; set; }
         public string? Comment { get; set; }
         public byte[] RowVersion { get; set; }
 
