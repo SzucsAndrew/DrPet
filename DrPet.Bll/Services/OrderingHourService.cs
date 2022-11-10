@@ -9,14 +9,12 @@ namespace DrPet.Bll.Services
     public sealed class OrderingHourService
     {
         private readonly DrPetDbContext _drPetDbContext;
-        private readonly CultureInfo _cultureInfo;
         private const double PAGE_SIZE = 2;
         private const int SHOW_DAYS = 7;
 
         public OrderingHourService(DrPetDbContext drPetDbContext)
         {
             _drPetDbContext = drPetDbContext;
-            _cultureInfo = CultureInfo.CurrentCulture;
         }
 
         public async Task<IEnumerable<OrderingHour>> GetOrderingHoursAsync(int year, int month)
