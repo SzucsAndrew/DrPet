@@ -10,6 +10,8 @@ namespace DrPet.Data.Entities
         public DateTime BirthDate { get; set; }
         public bool Fired { get; set; }
         public string? Comment { get; set; }
+        public string? ImageName { get; set; }
+        public string? Introduce { get; set; }
         public byte[] RowVersion { get; set; }
 
         public ICollection<Treatment> Treatments { get; set; }
@@ -22,6 +24,10 @@ namespace DrPet.Data.Entities
 
             builder.Property(d => d.Name).IsRequired();
             builder.Property(d => d.Name).HasMaxLength(100);
+
+            builder.Property(d => d.ImageName).HasMaxLength(250);
+
+            builder.Property(d => d.Introduce).HasMaxLength(100);
 
             builder.Property(d => d.Comment).HasMaxLength(300);
 

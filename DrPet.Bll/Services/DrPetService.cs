@@ -17,6 +17,7 @@ namespace DrPet.Bll.Services
             if (animal.Id == 0)
             {
                 await _drPetDbContext.Animals.AddAsync(animal);
+                await _drPetDbContext.SaveChangesAsync();
                 return animal;
             }
 
@@ -29,6 +30,7 @@ namespace DrPet.Bll.Services
             if (animalExist)
             {
                 _drPetDbContext.Animals.Update(animal);
+                await _drPetDbContext.SaveChangesAsync();
                 return animal;
             }
 
@@ -40,6 +42,7 @@ namespace DrPet.Bll.Services
             if (owner.Id == 0)
             {
                 await _drPetDbContext.Owners.AddAsync(owner);
+                await _drPetDbContext.SaveChangesAsync();
                 return owner;
             }
 
@@ -52,6 +55,7 @@ namespace DrPet.Bll.Services
             if (ownerExist)
             {
                 _drPetDbContext.Owners.Update(owner);
+                await _drPetDbContext.SaveChangesAsync();
                 return owner;
             }
 
@@ -63,6 +67,7 @@ namespace DrPet.Bll.Services
             if (orderingHour.Id == 0)
             {
                 await _drPetDbContext.OrderingHours.AddAsync(orderingHour);
+                await _drPetDbContext.SaveChangesAsync();
                 return orderingHour;
             }
 
@@ -75,6 +80,7 @@ namespace DrPet.Bll.Services
             if (ownerExist)
             {
                 _drPetDbContext.OrderingHours.Update(orderingHour);
+                await _drPetDbContext.SaveChangesAsync();
                 return orderingHour;
             }
 
@@ -93,6 +99,7 @@ namespace DrPet.Bll.Services
             if (treatment.Id == 0)
             {
                 await _drPetDbContext.Treatments.AddAsync(treatment);
+                await _drPetDbContext.SaveChangesAsync();
                 return treatment;
             }
 
@@ -105,6 +112,7 @@ namespace DrPet.Bll.Services
             if (ownerExist)
             {
                 _drPetDbContext.Treatments.Update(treatment);
+                await _drPetDbContext.SaveChangesAsync();
                 return treatment;
             }
 
@@ -116,6 +124,7 @@ namespace DrPet.Bll.Services
             if (treatmentEntry.Id == 0)
             {
                 await _drPetDbContext.TreatmentEntries.AddAsync(treatmentEntry);
+                await _drPetDbContext.SaveChangesAsync();
                 return treatmentEntry;
             }
 
@@ -128,6 +137,7 @@ namespace DrPet.Bll.Services
             if (ownerExist)
             {
                 _drPetDbContext.TreatmentEntries.Update(treatmentEntry);
+                await _drPetDbContext.SaveChangesAsync();
                 return treatmentEntry;
             }
 

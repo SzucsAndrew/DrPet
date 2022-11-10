@@ -1,0 +1,81 @@
+﻿@model DrPet.Web.ViewComponents.OrderingHourViewComponent
+
+<div id="viewData">
+    
+    @{
+        var pagination = Model.PaginationOrderingHours;
+        var orderingHours = pagination.Results;
+        if(orderingHours.Any())
+        {
+            <ul class="pagination pagination-sm">
+            @for (int i = 0; i < pagination.TotalOfPage; i++)
+            {
+                <li class="page-item @(pagination.CurrentPage == i ? "active" : null)"><a class="page-link" onclick="NextPage(@i)" >@(i+1)</a></li>    
+            }
+            </ul>
+            <div id="orderingHoursContainer" class="list-group">
+            @foreach (var orderingHour in orderingHours)
+            {
+                 <a class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@orderingHour.Date.ToShortDateString()</h5>
+                        <small>@orderingHour.Start.ToString("hh\\:mm") - @orderingHour.End?.ToString("hh\\:mm")</small>
+                    </div>
+                    <p class="mb-1">The Doctor: @orderingHour.Doctor.Name</p>
+                </a>
+            }
+            </div>
+        }
+        else
+        {
+           <p>Nothing found :/</p>
+        }
+    }
+    <div>
+        <a class="btn btn-secondary" onclick="ReloadEvents(false)">Prev</a>
+        <a class="btn btn-primary" onclick="ReloadEvents(true)">Next</a>
+    </div>
+</div>
+
+<script>
+function ReloadEvents(increase) {
+    @{
+        var nextDate = @Model.CurrentDate.AddMonths(1);
+        var prevDate = @Model.CurrentDate.AddMonths(-1);
+    }
+    
+    var sendYear = @nextDate.Year;
+    var sendMonth = @nextDate.Month;
+    if (!increase) {
+        sendYear = @prevDate.Year;
+        sendMonth = @prevDate.Month;
+    }
+
+    $.ajax({
+    url: '@Url.Action("ReloadOrderingHours", "OrderingHour")',
+    data: {
+        year: sendYear,
+        month: sendMonth,
+        currentPage: 0
+        },
+        success: function (data) {
+            $("#viewData").html(data);
+        }
+    })
+}
+
+function NextPage(page) {
+    
+    $.ajax({
+    url: '@Url.Action("ReloadOrderingHours", "OrderingHour")',
+    data: {
+        year: @Model.CurrentDate.Year,
+        month: @Model.CurrentDate.Month,
+        currentPage: page
+        },
+        success: function (data) {
+            $("#viewData").html(data);
+        }
+    })
+} 
+</script>
