@@ -1,0 +1,59 @@
+﻿@page
+@model DrPet.Web.Pages.Admin.Doctors.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Doctor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Doctor.Name" class="control-label"></label>
+                <input asp-for="Doctor.Name" class="form-control" />
+                <span asp-validation-for="Doctor.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Doctor.BirthDate" class="control-label"></label>
+                <input asp-for="Doctor.BirthDate" class="form-control" />
+                <span asp-validation-for="Doctor.BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+                <div class="custom-file">
+                    <input type="file" asp-for="Photo" class="custom-file-input form-control" accept=".png, .jpg, .jpeg">
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Doctor.Introduce" class="control-label"></label>
+                <input asp-for="Doctor.Introduce" class="form-control" />
+                <span asp-validation-for="Doctor.Introduce" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+        <script src="~/lib/tinymce/tinymce.min.js"></script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+        <script>
+tinymce.init({
+    selector: "#Doctor_Introduce",
+    width: '100%'
+});
+    </script>
+}

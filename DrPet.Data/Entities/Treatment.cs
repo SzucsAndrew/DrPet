@@ -11,7 +11,7 @@ namespace DrPet.Data.Entities
         public string? Comment { get; set; }
         public byte[] RowVersion { get; set; }
 
-        public int DortorId { get; set; }
+        public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }
 
         public int AnimalId { get; set; }
@@ -39,7 +39,7 @@ namespace DrPet.Data.Entities
 
             builder.HasOne(t => t.Doctor)
                 .WithMany(d => d.Treatments)
-                .HasForeignKey(t => t.DortorId)
+                .HasForeignKey(t => t.DoctorId)
                 .HasPrincipalKey(d => d.Id);
 
             builder.HasOne(t => t.Animal)

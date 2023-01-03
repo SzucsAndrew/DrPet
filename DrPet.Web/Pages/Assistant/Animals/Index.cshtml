@@ -1,0 +1,94 @@
+﻿@page
+@model DrPet.Web.Pages.Assistant.Animals.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Animals</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Species)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Kind)
+            </th>
+            <th>
+                <label>Treatments</label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Animal) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Species.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kind.Name)
+            </td>
+            <td>
+                @if(item.Treatments?.Any() == true)
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Doctor</th>
+                                <th>Cost</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    @foreach (var treatment in item.Treatments)
+                        {
+                            <tr>
+                                <td>@treatment.Appointment</td>
+                                <td><a asp-page="/Admin/Doctors/Details" asp-route-id="@treatment.Doctor.Id">@treatment.Doctor.Name</a></td>
+                                <td>@treatment.Price</td>
+                                <td><a asp-page="/Assistant/TreatmentEntries/Create" asp-route-treatmentId="@treatment.Id">Add Entry</a></td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <label>-</label>
+                }
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> |
+                <a asp-page="/Assistant/Treatments/Create" asp-route-animalId="@item.Id">Add Treatment</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

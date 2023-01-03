@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using DrPet.Data.SeedData
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,10 +23,33 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
+                        @if (User.IsInRole(RoleHelper.Administrators))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">Adminstration</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarAdmin">
+                                    <a class="dropdown-item" asp-page="/Admin/Doctors/Index">Doctors</a>
+                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item" asp-page="/Admin/Doctors/Create">Add Doctor</a>
+                                </div>
+                            </li>
+                        }
+                        @if (User.IsInRole(RoleHelper.Administrators) || User.IsInRole(RoleHelper.Assistants))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">Assistant</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarAdmin">
+                                    <a class="dropdown-item" asp-page="/Assistant/Animals/Index">Animals</a>
+                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item" asp-page="/Assistant/Animals/Create">Add Animal</a>
+                                </div>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
+                    <partial name="_LoginPartial"></partial>
                 </div>
             </div>
         </nav>

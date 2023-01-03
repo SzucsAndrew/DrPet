@@ -1,0 +1,52 @@
+﻿@using DrPet.Web.ViewModels.OrderingHours
+@model IList<EditOrderingHour>
+
+<h4>Ordering Hours</h4>
+@{
+    if (Model.Any())
+    {
+        <table class="table" id="ohTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model[0].Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model[0].Start)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model[0].End)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model[0].Comment)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.EditorFor(x => x[i].Date)
+                        </td>
+                        <td>
+                            @Html.EditorFor(x => x[i].Start)
+                        </td>
+                        <td>
+                            @Html.EditorFor(x => x[i].End)
+                        </td>
+                        <td>
+                            @Html.EditorFor(x => x[i].Comment)
+                        </td>
+                        <td style="display:none;">
+                            @Html.EditorFor(x => x[i].Id)
+                        </td>
+                        <td style="display:none;">
+                            @Html.EditorFor(x => x[i].DoctorId)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}

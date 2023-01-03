@@ -1,0 +1,44 @@
+﻿@page
+@model DrPet.Web.Pages.Admin.Doctors.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Doctor</h4>
+    <hr />
+    <div>
+        @{
+            if (Model.Doctor.ImageName != null) {
+                <img src="~/images/profiles/@Model.Doctor.ImageName" class="img-fluid rounded" alt="..." height="30%" width="30%">
+            }
+        }
+    </div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Doctor.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Doctor.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Doctor.BirthDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Doctor.BirthDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Doctor.Introduce)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Raw(Model.Doctor.Introduce)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Doctor?.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

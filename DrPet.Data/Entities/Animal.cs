@@ -11,6 +11,7 @@ namespace DrPet.Data.Entities
         public DateTime BirthDate { get; set; }
         public AnimalStatus Status { get; set; }
         public string? Comment { get; set; }
+        public bool IsDeleted { get; set; }
         public byte[] RowVersion { get; set; }
 
         public int SpeciesId { get; set; }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DrPet.Web.ViewComponents
 {
-    public class OrderingHourViewComponent : ViewComponent
+    public class OrderingHourViewComponent : ViewComponent//Todo:update
     {
         private readonly OrderingHourService _orderingHourService;
 

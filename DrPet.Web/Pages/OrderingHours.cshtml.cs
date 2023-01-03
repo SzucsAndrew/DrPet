@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DrPet.Web.Pages
 {
+    //Remove this file
     public class OrderingHoursModel : PageModel
     {
         private readonly OrderingHourService _orderingHourService;

@@ -1,0 +1,63 @@
+﻿@page
+@using DrPet.Data.Entities.Enums
+@model DrPet.Web.Pages.Assistant.Animals.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Animal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Animal.Name" class="control-label"></label>
+                <input asp-for="Animal.Name" class="form-control" />
+                <span asp-validation-for="Animal.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.BirthDate" class="control-label"></label>
+                <input asp-for="Animal.BirthDate" class="form-control" />
+                <span asp-validation-for="Animal.BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.Status" class="control-label"></label>
+                <select asp-for="Animal.Status" asp-items="Html.GetEnumSelectList<AnimalStatus>()" class="form-control"></select>
+                <span asp-validation-for="Animal.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.Comment" class="control-label"></label>
+                <input asp-for="Animal.Comment" class="form-control" />
+                <span asp-validation-for="Animal.Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.Owners" class="control-label"></label>
+                <select asp-for="Animal.Owners" class ="form-control" asp-items="ViewBag.Owners"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.SpeciesId" class="control-label">Species</label>
+                <select asp-for="Animal.SpeciesId" class ="form-control" asp-items="ViewBag.Species"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.KindId" class="control-label">Kind</label>
+                <select asp-for="Animal.KindId" class ="form-control" asp-items="ViewBag.Kinds"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

@@ -2,6 +2,7 @@
 using DrPet.Data;
 using DrPet.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Globalization;
 
 namespace DrPet.Bll.Services
@@ -9,13 +10,14 @@ namespace DrPet.Bll.Services
     public sealed class OrderingHourService
     {
         private readonly DrPetDbContext _drPetDbContext;
-        private const double PAGE_SIZE = 2;
+        private const double PAGE_SIZE = 5;
         private const int SHOW_DAYS = 7;
 
         public OrderingHourService(DrPetDbContext drPetDbContext)
         {
             _drPetDbContext = drPetDbContext;
         }
+        //Todo: add pagiantion for get doctor OrderingHouse
 
         public async Task<IEnumerable<OrderingHour>> GetOrderingHoursAsync(int year, int month)
         {
@@ -76,7 +78,10 @@ namespace DrPet.Bll.Services
 
             return await _drPetDbContext.OrderingHours
                 .Include(o => o.Doctor)
-                .Where(o => o.Date >= startDate && o.Date <= endDate)
+                .Where(o => o.Date >= startDate
+                         && o.Date <= endDate)
+                .OrderBy(o => o.Date)
+                .ThenBy(o => o.Start)
                 .ToListAsync();
         }
 
@@ -85,7 +90,38 @@ namespace DrPet.Bll.Services
             return await _drPetDbContext.OrderingHours
                .Where(o =>o.DoctorId == doctorId
                           && o.Date >= startDate.Date)
+               .OrderBy(o => o.Date)
+               .ThenBy(o => o.Start)
                .ToListAsync();
+        }
+
+        public async Task<IList<OrderingHour>> GetAllOrderingHours(int doctorId)
+        {
+            return await _drPetDbContext.OrderingHours
+                .Where(o => o.DoctorId == doctorId)
+                .OrderBy(o => o.Date)
+                .ThenBy(o => o.Start)
+                .ToListAsync();
+        }
+
+        public async Task Update(IList<OrderingHour> orderingHours)
+        {
+            foreach (var orderingHour in orderingHours)
+            {
+                EntityEntry<OrderingHour> entry;
+                if (orderingHour.Id != 0)
+                {
+                    entry = _drPetDbContext.Entry<OrderingHour>(await _drPetDbContext.OrderingHours.FindAsync(orderingHour.Id));
+                }
+                else
+                {
+                    entry = _drPetDbContext.Add(new OrderingHour());
+                }
+
+                entry.CurrentValues.SetValues(orderingHour);
+            }
+
+            await _drPetDbContext.SaveChangesAsync();
         }
     }
 }

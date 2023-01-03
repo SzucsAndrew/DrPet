@@ -1,0 +1,18 @@
+﻿@using DrPet.Web.ViewModels.Doctors
+@model IList<DoctorViewModel>
+
+ @foreach (var doctor in Model)
+    {
+        <div class="col">
+            <div class="card">
+              <img src="~/images/profiles/@doctor.ImageName" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">@doctor.Name</h5>
+                <div class="card-text">About me:
+                @Html.Raw(@doctor.Introduce)
+                </div>
+                <a asp-page="DoctorOrderingHours" asp-route-id="@doctor.Id" class="btn btn-primary">Appointments</a>
+              </div>
+            </div>
+        </div>
+    }

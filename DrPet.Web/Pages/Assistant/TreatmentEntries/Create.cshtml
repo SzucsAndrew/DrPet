@@ -1,0 +1,60 @@
+﻿@page
+@using DrPet.Data.Entities.Enums
+@model DrPet.Web.Pages.Assistant.TreatmentEntries.CreateModel
+@{
+}
+<h1>Create</h1>
+
+<h4>Treatment Entry</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TreatmentEntryDetailViewModel.MedicineRecipeId" class="control-label">Medicine Recipe Id</label>
+                <select asp-for="TreatmentEntryDetailViewModel.MedicineRecipeId" class ="form-control" asp-items="ViewBag.MedicineRecipes"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TreatmentEntryDetailViewModel.TreatmentId" class="control-label">Treatment Id</label>
+                <select asp-for="TreatmentEntryDetailViewModel.TreatmentId" class ="form-control" asp-items="ViewBag.Treatments"></select>
+            </div>
+            @{
+                if ((this.ViewData["PrevTreatmentEntrys"] as List<SelectListItem>)?.Count > 1)
+                {
+                    <div class="form-group">
+                        <label asp-for="TreatmentEntryDetailViewModel.PrevTreatmentEntryId" class="control-label">Previous Treatment Entry Id</label>
+                        <select asp-for="TreatmentEntryDetailViewModel.PrevTreatmentEntryId" class ="form-control" asp-items="ViewBag.PrevTreatmentEntrys"></select>
+                    </div>
+                }
+            }
+            <div class="form-group">
+                <label asp-for="TreatmentEntryDetailViewModel.TreatmentEntryType" class="control-label">Type</label>
+                <select asp-for="TreatmentEntryDetailViewModel.TreatmentEntryType" asp-items="Html.GetEnumSelectList<TreatmentEntryType>()" class="form-control"></select>
+                <span asp-validation-for="TreatmentEntryDetailViewModel.TreatmentEntryType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TreatmentEntryDetailViewModel.Duration" class="control-label"></label>
+                <input asp-for="TreatmentEntryDetailViewModel.Duration" class="form-control" />
+                <span asp-validation-for="TreatmentEntryDetailViewModel.Duration" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="TreatmentEntryDetailViewModel.Comment" class="control-label"></label>
+                <input asp-for="TreatmentEntryDetailViewModel.Comment" class="form-control" />
+                <span asp-validation-for="TreatmentEntryDetailViewModel.Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="/Assistant/Animals/Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

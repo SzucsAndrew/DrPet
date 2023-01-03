@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DrPet.Web.Controllers
 {
     [Route("{controller}")]
+    [AllowAnonymous]
     public class OrderingHourController : Controller
     {
         [HttpGet]
@@ -14,7 +16,11 @@ namespace DrPet.Web.Controllers
         [HttpGet("ReloadOrderingHours")]
         public IActionResult ReloadOrderingHours(int year, int month, int currentPage)
         {
-            return ViewComponent("OrderingHour", new { year = year, month = month, currentPage = currentPage });
+            return ViewComponent("OrderingHour", new { year, month, currentPage });
         }
+
+        //TODO:
+        //get pagination context
+        //get doctor order pagination
     }
 }

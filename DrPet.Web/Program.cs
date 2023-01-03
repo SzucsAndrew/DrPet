@@ -1,22 +1,23 @@
-using DrPet.Bll.Services;
 using DrPet.Data;
+using DrPet.Data.SeedData;
 using Microsoft.EntityFrameworkCore;
+using DrPet.Web.Helpers;
 
 namespace DrPet.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<DrPetDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DrPetDB")));
-            builder.Services.AddScoped<DrPetService>();
-            builder.Services.AddScoped<OrderingHourService>();
-            builder.Services.AddScoped<DoctorService>();
-            // Add services to the container.
-            builder.Services.AddRazorPages();
-            builder.Services.AddControllers();
+            var services = builder.Services;
+            var configuration = builder.Configuration;
+
+            services.AddDatabase(configuration);
+            services.AddServices(configuration);
+            services.AddAuth(configuration);
+            services.AddControllers();
 
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())
@@ -25,9 +26,15 @@ namespace DrPet.Web
                 var migrations = dbContext.Database.GetMigrations().ToHashSet();
                 if (dbContext.Database.GetAppliedMigrations().Any(a => !migrations.Contains(a)))
                 {
-                    throw new Exception("Törölt migráció!");
+                    throw new Exception("Removed migration!");
                 }
                 dbContext.Database.Migrate();
+
+                var roleSeeder = scope.ServiceProvider.GetRequiredService<IRoleSeedService>();
+                await roleSeeder.SeedRoleAsync();
+
+                var userSeeder = scope.ServiceProvider.GetRequiredService<IUserSeedService>();
+                await userSeeder.SeedUserAsync();
             }
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -42,6 +49,7 @@ namespace DrPet.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapRazorPages();

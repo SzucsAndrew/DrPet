@@ -1,0 +1,38 @@
+﻿@using DrPet.Data.Entities
+@model IList<OrderingHour>
+
+<span class="display-6">Week Ordering Hours</span>
+    @foreach (var dorcotrsOrder in Model.GroupBy(o => o.Doctor))
+    {
+        var collapseName = "collapse" + dorcotrsOrder.Key.Id;
+        var headingOne = "headingOne"+ dorcotrsOrder.Key.Id;
+        <div id="accordion">
+          <div class="card">
+            <div class="card-header" id="@headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#@collapseName" aria-expanded="true" aria-controls="@collapseName">
+                  @dorcotrsOrder.Key.Name 
+                </button>
+              </h5>
+            </div>
+
+            <div id="@collapseName" class="collapse" aria-labelledby="@headingOne" data-parent="#accordion">
+              <div class="card-body">
+                <div class="list-group">
+                @{var currentDate = DateTime.UtcNow.Date;}
+                @foreach (var order in dorcotrsOrder)
+                {
+                    <a class="list-group-item @(order.Date == currentDate ? "list-group-item-primary" : "list-group-item-action")">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">@order.Date.ToShortDateString()</h5>
+                            <small>@order.Start.ToString("hh\\:mm") - @order.End?.ToString("hh\\:mm")</small>
+                        </div>
+                        <p class="mb-1">@order.Comment</p>
+                    </a>
+                }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    }
